@@ -1,29 +1,28 @@
-% subject object
+% +subject object
 % singular plural
-% parse tree
+% +parse tree
 % seperate lexicon
 
-sentence --> subject_clause, verb_object_clause.
-subject_clause --> noun_phrase(subject). 
-verb_object_clause --> verb_phrase.
-verb_object_clause --> verb_phrase, noun_phrase(object).
+sentence(s(SC, VOC)) --> subject_clause(SC), verb_object_clause(VOC).
+subject_clause(sc(NP)) --> noun_phrase(subject, NP). 
+verb_object_clause(voc(VP)) --> verb_phrase(VP).
+verb_object_clause(voc(VP, NP)) --> verb_phrase(VP), noun_phrase(object, NP).
 
-noun_phrase(_) --> det_noun.
-noun_phrase(X) --> pronoun(X).
-verb_phrase --> verb.
+noun_phrase(_, np(DN)) --> det_noun(DN).
+noun_phrase(X, np(P)) --> pronoun(X, P).
+verb_phrase(vp(V)) --> verb(V).
 
+pronoun(subject, p(he)) --> [he].
+pronoun(subject, p(she)) --> [she].
+pronoun(object, p(him)) --> [him].
+pronoun(object, p(her)) --> [her].
 
-pronoun(subject) --> [he].
-pronoun(subject) --> [she].
-pronoun(object) --> [him].
-pronoun(object) --> [her].
+det_noun(dn(D, N)) --> det(D), noun(N).
+det(d(a)) --> [a].
+det(d(the)) --> [the].
+noun(n(man)) --> [man].
+noun(n(woman)) --> [woman].
 
-det_noun --> det, noun.
-det --> [a].
-det --> [the].
-noun --> [man].
-noun --> [woman].
-
-verb --> [likes].
-verb --> [hates].
-verb --> [sees]. 
+verb(v(likes)) --> [likes].
+verb(v(hates)) --> [hates].
+verb(v(sees)) --> [sees]. 
