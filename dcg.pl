@@ -1,7 +1,7 @@
 % +subject object
 % singular plural
 % +parse tree
-% seperate lexicon
+% +seperate lexicon
 
 sentence(s(SC, VOC)) --> subject_clause(SC), verb_object_clause(VOC).
 subject_clause(sc(NP)) --> noun_phrase(subject, NP). 
@@ -12,17 +12,21 @@ noun_phrase(_, np(DN)) --> det_noun(DN).
 noun_phrase(X, np(P)) --> pronoun(X, P).
 verb_phrase(vp(V)) --> verb(V).
 
-pronoun(subject, p(he)) --> [he].
-pronoun(subject, p(she)) --> [she].
-pronoun(object, p(him)) --> [him].
-pronoun(object, p(her)) --> [her].
-
 det_noun(dn(D, N)) --> det(D), noun(N).
-det(d(a)) --> [a].
-det(d(the)) --> [the].
-noun(n(man)) --> [man].
-noun(n(woman)) --> [woman].
 
-verb(v(likes)) --> [likes].
-verb(v(hates)) --> [hates].
-verb(v(sees)) --> [sees]. 
+det(d(Word)) --> [Word], {lexicon(Word, d)}.
+noun(n(Word)) --> [Word], {lexicon(Word, n)}.
+pronoun(Type, p(Word)) --> [Word], {lexicon(Word, Type, p)}.
+verb(v(Word)) --> [Word], {lexicon(Word, v)}.
+
+lexicon(a, d).
+lexicon(the, d).
+lexicon(man, n).
+lexicon(woman, n).
+lexicon(likes, v).
+lexicon(hates, v).
+lexicon(sees, v). 
+lexicon(he, subject, p).
+lexicon(she, subject, p).
+lexicon(him, object, p).
+lexicon(her, object, p).
